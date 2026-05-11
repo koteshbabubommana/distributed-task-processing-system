@@ -2,24 +2,21 @@
 
 A production-style distributed backend platform for asynchronous task execution, queue orchestration, retry handling, worker monitoring, and scalable backend processing using FastAPI, Celery, Redis, and Docker.
 
----
+## Architecture
 
-## Features
-
-- Asynchronous task processing
-- Distributed worker orchestration
-- Queue-based architecture
-- Retry mechanisms for failed tasks
-- Redis-backed task broker
-- Dockerized backend services
-- REST API endpoints with FastAPI
-- Task monitoring and status tracking
-- Health check APIs
-- Metrics endpoint for observability
-- Structured logging support
-- Scalable backend infrastructure
-
----
+```text
+Client / API User
+      ↓
+FastAPI Backend
+      ↓
+Redis Task Queue
+      ↓
+Celery Worker
+      ↓
+Task Execution
+      ↓
+Task Status + Metrics
+```
 
 ## Tech Stack
 
@@ -32,83 +29,53 @@ A production-style distributed backend platform for asynchronous task execution,
 - Uvicorn
 - Pytest
 
----
+## Features
 
-## Project Structure
-
-```bash
-distributed-task-processing-system/
-│
-├── app/
-│   ├── main.py
-│   ├── tasks.py
-│   ├── worker.py
-│   ├── task_queue.py
-│   ├── monitoring.py
-│   ├── models.py
-│   ├── utils/
-│   │   └── logger.py
-│   └── __init__.py
-│
-├── tests/
-│   └── test_tasks.py
-│
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
-
----
+- Asynchronous task processing
+- Distributed worker orchestration
+- Redis-backed queue system
+- Retry handling for failed tasks
+- Task status tracking
+- Health check endpoint
+- Metrics endpoint
+- Dockerized multi-service setup
+- Swagger API documentation
+- Structured project layout
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | / | Home endpoint |
-| GET | /health | Health check |
-| POST | /tasks | Submit async task |
-| GET | /tasks/{task_id} | Get task status |
-| GET | /metrics | Monitoring metrics |
+| GET | `/` | Home endpoint |
+| GET | `/health` | Service health check |
+| POST | `/tasks` | Submit a new async task |
+| GET | `/tasks/{task_id}` | Check task execution status |
+| GET | `/metrics` | View queue and worker metrics |
 
----
+## Run Instructions
 
-## Running Locally
-
-### Install dependencies
+### 1. Clone the repository
 
 ```bash
-pip install -r requirements.txt
+git clone https://github.com/koteshbabubommana/distributed-task-processing-system.git
+cd distributed-task-processing-system
 ```
 
-### Start application
-
-```bash
-python -m uvicorn app.main:app --reload
-```
-
-### Run with Docker
+### 2. Run with Docker
 
 ```bash
 docker compose up --build
 ```
 
----
+### 3. Open Swagger API Docs
 
-## Monitoring
+```text
+http://localhost:8000/docs
+```
 
-The platform includes:
-- worker monitoring
-- queue depth visibility
-- health checks
-- metrics endpoint
-- structured logging
-- retry tracking
+### 4. Submit a sample task
 
----
-
-## Sample Task Request
+Use `POST /tasks` with this request body:
 
 ```json
 {
@@ -120,20 +87,57 @@ The platform includes:
 }
 ```
 
----
+### 5. Check task status
+
+Copy the returned `task_id` and use:
+
+```text
+GET /tasks/{task_id}
+```
+
+## Project Structure
+
+```text
+distributed-task-processing-system/
+├── app/
+│   ├── utils/
+│   │   └── logger.py
+│   ├── __init__.py
+│   ├── main.py
+│   ├── models.py
+│   ├── monitoring.py
+│   ├── task_queue.py
+│   ├── tasks.py
+│   └── worker.py
+├── tests/
+│   └── test_tasks.py
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yml
+├── README.md
+└── requirements.txt
+```
+
+## Monitoring
+
+The project includes basic monitoring support through:
+
+- `/health` endpoint
+- `/metrics` endpoint
+- Celery worker logs
+- Redis queue visibility
+- Docker container logs
 
 ## Future Enhancements
 
-- Prometheus integration
-- Grafana dashboards
-- Kubernetes deployment
-- RabbitMQ support
-- Authentication & authorization
+- Prometheus metrics
+- Grafana dashboard
+- PostgreSQL task history storage
+- JWT authentication
 - Rate limiting
-- CI/CD pipelines
-- Auto-scaling workers
-
----
+- Kubernetes deployment
+- GitHub Actions CI/CD
+- Cloud deployment on Render, Railway, AWS, or GCP
 
 ## Author
 
