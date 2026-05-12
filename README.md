@@ -1,4 +1,10 @@
 # Distributed Task Processing & Monitoring Platform
+![python](https://img.shields.io/badge/python-3.13-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-backend-green)
+![async](https://img.shields.io/badge/async-task--processing-yellow)
+![monitoring](https://img.shields.io/badge/monitoring-enabled-orange)
+![docker](https://img.shields.io/badge/docker-enabled-blue)
+![CI](https://img.shields.io/badge/CI-GitHub%20Actions-brightgreen)
 
 A production-style distributed backend platform for asynchronous task execution, queue orchestration, retry handling, worker monitoring, and scalable backend processing using FastAPI, Celery, Redis, and Docker.
 
